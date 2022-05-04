@@ -1,0 +1,64 @@
+From 003cd04161379f5d206d1c6f56f1664e0551d817 Mon Sep 17 00:00:00 2001
+From: Robert Eckelmann <longnoserob@gmail.com>
+Date: Wed, 4 May 2022 20:43:26 +0900
+Subject: [PATCH] adding support for the Agilent E5805A USB-4xRS232 adapter, HW
+ is based on EdgePort/4 with TI TUSB5052.
+
+Signed-off-by: Robert Eckelmann <longnoserob@gmail.com>
+---
+ Documentation/usb/usb-serial.rst | 4 ++++
+ drivers/usb/serial/io_ti.c       | 2 ++
+ drivers/usb/serial/io_usbvend.h  | 2 +-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/usb/usb-serial.rst b/Documentation/usb/usb-serial.rst
+index 69586aeb60bb..d9cfb6cb2d07 100644
+--- a/Documentation/usb/usb-serial.rst
++++ b/Documentation/usb/usb-serial.rst
+@@ -412,6 +412,10 @@ Inside Out Networks Edgeport Driver
+        - Edgeport/4 DIN
+        - Edgeport/16 Dual
+ 
++  This dirver now also includes the Agilent E5805A usb-to-RS232 adapter device,
++  as this is a rebranded Edgeport device.
++
++
+   For any questions or problems with this driver, please contact Greg
+   Kroah-Hartman at greg@kroah.com
+ 
+diff --git a/drivers/usb/serial/io_ti.c b/drivers/usb/serial/io_ti.c
+index a7b3c15957ba..2810cefa628d 100644
+--- a/drivers/usb/serial/io_ti.c
++++ b/drivers/usb/serial/io_ti.c
+@@ -166,6 +166,7 @@ static const struct usb_device_id edgeport_2port_id_table[] = {
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_8S) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_416) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_416B) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_E5805A)},
+ 	{ }
+ };
+ 
+@@ -204,6 +205,7 @@ static const struct usb_device_id id_table_combined[] = {
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_8S) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_416) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_416B) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_E5805A)},	
+ 	{ }
+ };
+ 
+diff --git a/drivers/usb/serial/io_usbvend.h b/drivers/usb/serial/io_usbvend.h
+index 52cbc353051f..3be6bce15d97 100644
+--- a/drivers/usb/serial/io_usbvend.h
++++ b/drivers/usb/serial/io_usbvend.h
+@@ -212,7 +212,7 @@
+ //
+ // Definitions for other product IDs
+ #define ION_DEVICE_ID_MT4X56USB			0x1403	// OEM device
+-
++#define ION_DEVICE_ID_E5805A			0x1A01  // OEM device (internals based on Edgeport/4?)
+ 
+ #define	GENERATION_ID_FROM_USB_PRODUCT_ID(ProductId)				\
+ 			((__u16) ((ProductId >> 8) & (ION_GENERATION_MASK)))
+-- 
+2.36.0
+
