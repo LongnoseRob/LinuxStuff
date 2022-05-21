@@ -1,0 +1,51 @@
+From 0affd4b7adb6aa554cdf88968fdfcc3784b7d7de Mon Sep 17 00:00:00 2001
+From: Robert Eckelmann <longnoserob@gmail.com>
+Date: Sat, 21 May 2022 21:07:44 +0900
+Subject: [PATCH v2] usb: serial: io_ti: Adding Agilent E5805A support
+
+Signed-off-by: Robert Eckelmann <longnoserob@gmail.com>
+---
+Changes in v2:
+  - removed documentation change
+  - improvements to spacing in io_usbvend.h
+  - rephrasing comment in io_usbvend.h
+
+ drivers/usb/serial/io_ti.c      | 2 ++
+ drivers/usb/serial/io_usbvend.h | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/drivers/usb/serial/io_ti.c b/drivers/usb/serial/io_ti.c
+index a7b3c15957ba..ff0d05f45fce 100644
+--- a/drivers/usb/serial/io_ti.c
++++ b/drivers/usb/serial/io_ti.c
+@@ -166,6 +166,7 @@ static const struct usb_device_id edgeport_2port_id_table[] = {
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_8S) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_416) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_416B) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_E5805A)},
+ 	{ }
+ };
+ 
+@@ -204,6 +205,7 @@ static const struct usb_device_id id_table_combined[] = {
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_8S) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_416) },
+ 	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_TI_EDGEPORT_416B) },
++	{ USB_DEVICE(USB_VENDOR_ID_ION, ION_DEVICE_ID_E5805A)},
+ 	{ }
+ };
+ 
+diff --git a/drivers/usb/serial/io_usbvend.h b/drivers/usb/serial/io_usbvend.h
+index 52cbc353051f..879ef755898f 100644
+--- a/drivers/usb/serial/io_usbvend.h
++++ b/drivers/usb/serial/io_usbvend.h
+@@ -213,6 +213,7 @@
+ // Definitions for other product IDs
+ #define ION_DEVICE_ID_MT4X56USB			0x1403	// OEM device
+ 
++#define ION_DEVICE_ID_E5805A			0x1A01  // OEM device (rebranded Edgeport/4)
+ 
+ #define	GENERATION_ID_FROM_USB_PRODUCT_ID(ProductId)				\
+ 			((__u16) ((ProductId >> 8) & (ION_GENERATION_MASK)))
+-- 
+2.36.1
+
